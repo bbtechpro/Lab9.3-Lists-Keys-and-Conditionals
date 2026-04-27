@@ -1,9 +1,6 @@
-import { useState } from 'react'
 import './App.css'
-import './components/TaskFilter/TaskFilter'
-import './components/TaskItem/TaskItem';
-import './components/TaskList/TaskList';
-import { TaskList } from './components/TaskList/TaskList';
+import TaskList from './components/TaskList/TaskList';
+
 
 function App() {
   return (
