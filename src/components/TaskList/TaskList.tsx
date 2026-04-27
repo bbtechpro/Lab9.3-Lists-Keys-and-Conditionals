@@ -1,50 +1,60 @@
-import React from 'react';
-const itemArray = [item1, item2, item3];
- 
-// Now, jsxElements is an array like:
-// [<MyComponent data={item1} />, <MyComponent data={item2} />, <MyComponent data={item3} />]
+import { useState } from 'react';
+import TaskFilter from '../TaskFilter/TaskFilter';
+import type { FilterStatus } from '../TaskFilter/TaskFilter';
+import { TaskItem } from '../TaskItem/TaskItem';
+import type { Task } from '../../types/types';
+import styles from './TaskList.module.css';
 
-const TaskList = itemArray.map((itemData) => {
-    return <MyComponent data={itemData} />;
-    return <ul>{Tasklist.itemAray}</ul>;
-    return <div>TaskList component</div>;
-});
-
-interface Task {
-  id: string; // Unique ID from data
-  name: string;
-  price: number;
-}
- 
-const tasks: Task[] = [
-  { id: 't1', name: 'Wash Dishes'},
-  { id: 't2', name: 'Mow grass'},
-  { id: 't3', name: 'Take out trash'},
+const initialTasks: Task[] = [
+  { id: 't1', name: 'Wash dishes', isCompleted: false, priority: 'medium' },
+  { id: 't2', name: 'Mow grass', isCompleted: false, priority: 'high' },
+  { id: 't3', name: 'Take out trash', isCompleted: true, priority: 'low' },
 ];
- 
+
 function TaskList() {
-  const taskElements = products.map((task) => (
-    // Key goes on the outermost element in the map - the <li> here
-    <li key={task.id} style={{ borderBottom: '1px solid #eee', marginBottom: '10px', paddingBottom: '10px' }}>
-        {/* Using the dedicated component */}
-        <TaskItem task={task} />
- 
-        {/* Or render directly
-        {/* <h3>{task.name}</h3>
-        <p>ID: {task.id}</p>
-        } */}
-    </li>
-  ));
- 
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [filter, setFilter] = useState<FilterStatus>('all');
+
+  const handleToggle = (id: string) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+      )
+    );
+  };
+
+  const handleDelete = (id: string) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
+
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') return !task.isCompleted;
+    if (filter === 'completed') return task.isCompleted;
+    return true;
+  });
+
   return (
     <div>
       <h2>Tasks</h2>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {taskElements}
+      <TaskFilter currentFilter={filter} onFilterChange={setFilter} />
+
+      <ul className={styles.taskList}>
+        {filteredTasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggle={handleToggle}
+            onDelete={handleDelete}
+          />
+        ))}
       </ul>
+
+      {tasks.length === 0 && <p>No tasks left! Great job.</p>}
+      {tasks.length > 0 && filteredTasks.length === 0 && (
+        <p>No tasks match this filter.</p>
+      )}
     </div>
   );
 }
- 
 
 export default TaskList;
