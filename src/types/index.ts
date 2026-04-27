@@ -18,3 +18,16 @@ export interface TaskListProps {
 export interface TaskFormProps {
   onAddTask: (task: Omit<Task, 'id'>) => void;
 }
+
+export interface TaskItemProps {
+  task: Task;
+  onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
+  onDelete: (taskId: string) => void;
+}
+
+export interface TaskFilterProps {
+  onFilterChange: (filters: {
+    status?: TaskStatus;
+    priority?: 'low' | 'medium' | 'high';
+  }) => void;
+}
