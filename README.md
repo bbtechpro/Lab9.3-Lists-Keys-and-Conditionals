@@ -95,8 +95,19 @@ Compose components to create a complete task management interface.
 Handle prop passing between components.
 Implement proper event handling.
 
-Reflection Questions
+Reflection Questions:
 How did you ensure unique keys for your list items?
+- Unique keys for list items: I used each task’s stable id as the React key (key={task.id} in TaskList). Since IDs are unique per task and don’t change when filtering/toggling, React can correctly track each row across re-renders.
+
 What considerations did you make when implementing the filtering functionality?
+- Filtering considerations: I kept a dedicated filter state with a strict union type ('all' | 'active' | 'completed') so that only valid filter values are possible. Then I derived filteredTasks from tasks on render, which avoids duplicating source data and keeps filtering logic centralized and predictable.
+
 How did you handle state updates for task status changes?
+- State updates for task status changes: I used functional state updates (setTasks(prev => ...)) to avoid stale state issues. Toggling is done immutably with map, flipping isCompleted only for the matching id, which is the safest React pattern for list updates.
+
 What challenges did you face when implementing conditional rendering?
+- Conditional rendering challenges: The main challenge was keeping UI feedback clear without making logic messy. I separated concerns by: 
+using class-based conditions (e.g., completed vs not completed),
+preserving dynamic values like priority color through a CSS variable,
+handling empty states separately (no tasks vs no tasks match this filter).
+This made conditional rendering easier to understand and easier to style consistently.
