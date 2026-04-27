@@ -71,3 +71,32 @@ export default defineConfig([
   },
 ])
 ```
+Activity Tasks
+Component Implementation:
+
+Implement each component according to its interface requirements.
+Use proper TypeScript types and interfaces.
+Implement list rendering with unique keys.
+Add conditional rendering based on task properties.
+List Management:
+
+Render the task list with proper key props.
+Implement filtering functionality.
+Handle task status changes.
+Implement task deletion.
+Visual Feedback:
+
+Show different styles based on task status and priority.
+Implement hover and active states.
+Add visual indicators for task properties.
+Component Composition:
+
+Compose components to create a complete task management interface.
+Handle prop passing between components.
+Implement proper event handling.
+
+Reflection Questions
+How did you ensure unique keys for your list items?
+What considerations did you make when implementing the filtering functionality?
+How did you handle state updates for task status changes?
+What challenges did you face when implementing conditional rendering?
