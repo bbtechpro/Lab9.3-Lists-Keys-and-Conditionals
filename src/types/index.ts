@@ -2,11 +2,9 @@ export type TaskStatus = 'pending' | 'in-progress' | 'completed';
  
 export interface Task {
   id: string;
-  title: string;
-  description: string;
-  status: TaskStatus;
+  name: string;
+  isCompleted: boolean;
   priority: 'low' | 'medium' | 'high';
-  dueDate: string;
 }
  
 export interface TaskListProps {
