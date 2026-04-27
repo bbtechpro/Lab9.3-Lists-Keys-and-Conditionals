@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import type { Task } from '../../types/types';
+import type { Task } from '../../types/index';
 import styles from './TaskItem.module.css';
 
 interface Props {
